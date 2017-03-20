@@ -14,7 +14,6 @@ import br.com.marciopaulo.alunos.util.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     EditText edtLogin;
     EditText edtSenha;
     CheckBox cbManterConectado;
@@ -72,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
-
-
         }
         else{
 

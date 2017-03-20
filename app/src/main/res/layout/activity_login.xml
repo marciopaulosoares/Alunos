@@ -3,7 +3,8 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10sp">
 
     <TextView
         android:layout_width="match_parent"
@@ -26,14 +27,14 @@
         android:id="@+id/edtSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:text="" />
 
     <CheckBox
-        android:text="@string/manterconectado"
+        android:id="@+id/cbManterConectado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cbManterConectado" />
+        android:text="@string/manterconectado" />
 
 
     <Button

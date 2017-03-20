@@ -36,29 +36,26 @@ public class CadastroFragment extends Fragment {
 
     public CadastroFragment(Aluno aluno) {
         this.aluno=aluno;
-
     }
 
     public CadastroFragment(){
         this.aluno=new Aluno();
     }
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+
+        
         view= inflater.inflate(R.layout.fragment_cadastro, container, false);
 
         edtCadastroNome =(EditText) view.findViewById(R.id.edtCadastroNome);
-        btnCadastrar =(Button) view.findViewById(R.id.btnCadastrar);
+        btnCadastrar    =(Button) view.findViewById(R.id.btnCadastrar);
         if(aluno!=null){
-
             edtCadastroNome.setText(aluno.getNome());
-
         }
-
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +78,10 @@ public class CadastroFragment extends Fragment {
                    ListaFragment listaFragment = new ListaFragment();
 
                     FragmentManager manager = ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
-                    manager.beginTransaction()
-                    .replace(R.id.content_main,listaFragment, listaFragment.getTag())
-                    .commit();
+                    manager
+                            .beginTransaction()
+                            .replace(R.id.content_main,listaFragment, listaFragment.getTag())
+                            .commit();
                 }
             }
         });

@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import br.com.marciopaulo.alunos.api.UsuarioAPI;
 import br.com.marciopaulo.alunos.dao.UsuarioDao;
+import br.com.marciopaulo.alunos.helpers.NetworkHelper;
 import br.com.marciopaulo.alunos.helpers.RetrofitHelper;
 import br.com.marciopaulo.alunos.model.Usuario;
 import br.com.marciopaulo.alunos.util.Constantes;
@@ -31,13 +33,17 @@ public class SplashScreenActivity extends AppCompatActivity implements Callback<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+       if( NetworkHelper.isAvailable(App.getContext())){
 
-
-        retrofit= RetrofitHelper.Get();
-        UsuarioAPI api = retrofit.create(UsuarioAPI.class);
-        Call<Usuario> call = api.buscar(Constantes.END_POINT_USUARIO);
-        call.enqueue(this);
-        carregar();
+            retrofit = RetrofitHelper.Get();
+            UsuarioAPI api = retrofit.create(UsuarioAPI.class);
+            Call<Usuario> call = api.buscar(Constantes.END_POINT_USUARIO);
+            call.enqueue(this);
+            carregar();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"É necessário estar conectado a internet",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void carregar() {
@@ -49,7 +55,6 @@ public class SplashScreenActivity extends AppCompatActivity implements Callback<
             iv.clearAnimation();
             iv.startAnimation(anim);
         }
-
 
         new Handler().postDelayed(new Runnable() {
             @Override

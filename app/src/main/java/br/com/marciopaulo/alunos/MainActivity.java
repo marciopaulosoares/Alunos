@@ -1,11 +1,9 @@
 package br.com.marciopaulo.alunos;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,12 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import br.com.marciopaulo.alunos.dao.AlunoDao;
-import br.com.marciopaulo.alunos.model.Aluno;
-
-import static br.com.marciopaulo.alunos.App.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,15 +18,20 @@ public class MainActivity extends AppCompatActivity
     CadastroFragment cadastroFragment;
     ListaFragment listaFragment;
     SobreFragment sobreFragment;
+    FragmentManager manager;
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
+        manager=getSupportFragmentManager();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,7 +41,23 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        listaFragment =new ListaFragment();
+        switchFragment(listaFragment);
+
+        navigationView.getMenu().getItem(1).setChecked(true);
+
     }
+
+    public void switchFragment(Fragment fragment){
+
+        manager.beginTransaction()
+                .replace(R.id.content_main,fragment, fragment.getTag())
+                .commit();
+
+        currentFragment= fragment;
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -83,28 +96,19 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        FragmentManager manager= getSupportFragmentManager();
+
 
         if (id == R.id.nav_cadastro) {
             cadastroFragment= new CadastroFragment();
+            switchFragment(cadastroFragment);
 
-            manager.beginTransaction()
-                    .replace(R.id.content_main,cadastroFragment, cadastroFragment.getTag())
-                    .commit();
         } else if (id == R.id.nav_lista) {
             listaFragment = new ListaFragment();
-
-
-            manager.beginTransaction()
-                    .replace(R.id.content_main,listaFragment, listaFragment.getTag())
-                    .commit();
+            switchFragment(listaFragment);
 
         } else if (id == R.id.nav_sobre) {
             sobreFragment = new SobreFragment();
-
-            manager.beginTransaction()
-                    .replace(R.id.content_main,sobreFragment, sobreFragment.getTag())
-                    .commit();
+            switchFragment(sobreFragment);
         }
 
 
